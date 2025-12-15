@@ -1,0 +1,1 @@
+// Arquivo removido/ignorado pois o Next.js usa app/page.tsx

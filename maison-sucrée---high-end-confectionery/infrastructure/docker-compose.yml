@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: maison-sucree-app
+    image: maison-sucree-app:latest
+    build:
+      context: ..
+      dockerfile: infrastructure/Dockerfile
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/maison_db?schema=public
+      - NODE_ENV=production
+      # Ajuste para o IP do seu servidor se precisar acessar uploads via URL absoluta, 
+      # mas localhost funciona para acesso interno do container.
+      - NEXT_PUBLIC_APP_URL=http://localhost:3000
+    depends_on:
+      - db
+    volumes:
+      # Persistência de uploads de imagens
+      - uploads_data:/app/public/uploads
+    networks:
+      - app-network
+
+  db:
+    container_name: maison-sucree-db
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: maison_db
+    volumes:
+      # Persistência dos dados do banco
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
+  uploads_data:
+
+networks:
+  app-network:
+    driver: bridge
