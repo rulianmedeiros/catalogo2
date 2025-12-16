@@ -15,7 +15,7 @@ services:
       - NODE_ENV=production
       # Ajuste para o IP do seu servidor se precisar acessar uploads via URL absoluta, 
       # mas localhost funciona para acesso interno do container.
-      - NEXT_PUBLIC_APP_URL=http://localhost:3000
+      - NEXT_PUBLIC_APP_URL=http://65.108.148.196:3000
     depends_on:
       - db
     volumes:
