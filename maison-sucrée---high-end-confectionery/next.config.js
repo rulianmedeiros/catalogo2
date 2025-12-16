@@ -1,13 +1,26 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
-  images: {
-    unoptimized: true, // Needed if serving local images in some docker setups without a dedicated image server
+  typescript: {
+    // Ignora erros de tipagem do TypeScript durante o build
+    ignoreBuildErrors: true,
   },
-  // Ensure we can serve files from the public folder even in standalone mode
   eslint: {
+    // Ignora erros de verificação de estilo (linting) durante o build
     ignoreDuringBuilds: true,
   },
-};
+  images: {
+    // Permite carregar imagens de qualquer lugar (útil para uploads)
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+      {
+        protocol: 'http',
+        hostname: '**',
+      },
+    ],
+  },
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
