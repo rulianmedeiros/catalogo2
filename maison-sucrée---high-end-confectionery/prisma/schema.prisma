@@ -37,3 +37,14 @@ model Category {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
+
+// Adicione isso no final do arquivo
+model Settings {
+  id           String   @id @default(uuid())
+  storeName    String   @default("Maison Sucrée")
+  logo         String?
+  primaryColor String   @default("#000000")
+  secondaryColor String @default("#ffffff")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
